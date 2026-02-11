@@ -1,9 +1,7 @@
-server:
-  port: 9000
 
 spring:
   application:
-    name: API-GATEWAY
+    name: AUTH-SERVICE
 
 eureka:
   client:
@@ -12,25 +10,6 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-spring:
-  cloud:
-    gateway:
-      server:
-        webflux:
-          routes:
+server:
+  port: 9000
 
-            # AUTH SERVICE
-            - id: authService
-              uri: lb://AUTH-SERVICE
-              predicates:
-                - Path=/auth/**
-              filters:
-                - StripPrefix=1
-
-            # PRODUCT SERVICE
-            - id: productService
-              uri: lb://PRODUCT-SERVICE
-              predicates:
-                - Path=/product/**
-              filters:
-                - StripPrefix=1
