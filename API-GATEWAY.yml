@@ -2,23 +2,25 @@ spring:
   application:
     name: API-GATEWAY
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
 server:
   port: 9000
 
-cloud:
-  gateway:
-    routes:
-      - id: authService
-        uri: lb://AUTH-SERVICE
-        predicates:
-          - Path=/auth/**
-
-      - id: productService
-        uri: lb://PRODUCT-SERVICE
-        predicates:
-          - Path=/product/**
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: authService
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+        - id: productService
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/product/**
